@@ -1,6 +1,6 @@
 ﻿# 슈퍼마리오 DQN 프로젝트 진행 현황
 
-> 작성일: 2026-06-25
+> 최초 작성일: 2026-06-25 | 최종 수정일: 2026-06-25
 
 ---
 
@@ -12,7 +12,7 @@
 | 기간 | 2026-06-25 ~ 2026-07-01 (7일) |
 | 인원 | 1인 |
 | 학습 환경 | Google Colab (T4 GPU) + Google Drive 연동 |
-| 시연 | Streamlit 웹앱 |
+| 시연 | Streamlit 웹앱 (4탭 구성) |
 | GitHub | https://github.com/HyunDove/supermario-dqn |
 
 ---
@@ -23,28 +23,40 @@
 
 | 파일 | 내용 |
 |---|---|
-| `src/env/wrappers.py` | 환경 전처리 파이프라인 (그레이스케일, 리사이즈, 프레임스킵, 프레임스택) |
-| `src/model/dqn.py` | CNN 기반 DQN 신경망 구조 (Conv2d x3 + FC x2) |
-| `src/agent/dqn_agent.py` | DQN 에이전트 (epsilon-greedy, 학습, 저장/로드) |
+| `src/env/wrappers.py` | 환경 전처리 파이프라인 (그레이스케일, 리사이즈, 프레임스킵, 프레임스택) + 주석 |
+| `src/model/dqn.py` | CNN 기반 DQN 신경망 구조 (Conv2d x3 + FC x2) + 주석 |
+| `src/agent/dqn_agent.py` | DQN 에이전트 (epsilon-greedy, 학습, 저장/로드) + 주석 |
 | `src/utils/replay_buffer.py` | Experience Replay Buffer |
 | `src/utils/recorder.py` | 에피소드별 플레이 영상 녹화 유틸 |
 | `train.py` | 로컬 학습 실행 진입점 |
-| `app/streamlit_app.py` | Streamlit 시연 웹앱 (시연/학습곡선/모델구조 3탭) |
+| `app/streamlit_app.py` | Streamlit 시연 웹앱 (4탭 구성) |
 | `colab/train.ipynb` | Google Colab 학습 노트북 (Drive 연동, 영상 기록, 그래프 포함) |
 | `requirements.txt` | Python 패키지 의존성 |
 | `README.md` | 프로젝트 소개 문서 (ml_project 스타일 참고) |
+| `reports/progress.md` | 진행 현황 보고서 (현재 파일) |
 
-### Colab 노트북 구성 (train.ipynb 셀 순서)
+### Streamlit 웹앱 탭 구성 (app/streamlit_app.py)
+
+| 탭 | 내용 |
+|---|---|
+| 🎮 시연 | 모델 선택 후 에이전트 플레이 영상 실시간 생성 |
+| 🎬 에피소드 비교 | EP 0 / 1000 / 5000 / 7000 영상 2열 그리드로 비교 |
+| 📈 학습 곡선 | 에피소드별 보상 변화 그래프 |
+| 🧠 모델 구조 | CNN 구조 코드 + 하이퍼파라미터 요약 |
+
+> 에피소드 비교 탭: 영상이 없는 에피소드는 안내 문구 자동 표시, 학습 진행되면서 순서대로 채워짐
+
+### Colab 노트북 구성 (colab/train.ipynb 셀 순서)
 
 | 셀 | 내용 |
 |---|---|
-| 1 | Google Drive 마운트 및 폴더 생성 |
-| 2 | 패키지 설치 (gym, nes-py, opencv 등) |
-| 3 | 가상 디스플레이 시작 (헤드리스 렌더링용) |
-| 4 | GitHub에서 프로젝트 클론 |
-| 5 | GPU 확인 |
-| 6 | 학습 실행 (영상 자동 기록 포함) |
-| 7 | 학습 곡선 그래프 저장 |
+| 1 | Google Drive 마운트 및 폴더 생성 (models, videos, results) |
+| 2 | 패키지 설치 (gym, nes-py, opencv, pyvirtualdisplay 등) |
+| 3 | 가상 디스플레이 시작 (Colab 헤드리스 렌더링용) |
+| 4 | GitHub에서 프로젝트 클론 (git pull로 최신 코드 반영) |
+| 5 | GPU 확인 (T4 정상 인식 여부) |
+| 6 | 학습 실행 (영상 자동 기록 + 체크포인트 저장 포함) |
+| 7 | 학습 곡선 그래프 저장 (2단 구성: 원본 + 이동평균) |
 | 8 | 저장 파일 목록 확인 |
 | 9 | 세션 끊긴 후 이어서 학습하기 |
 
@@ -66,11 +78,14 @@ supermario_dl_project/      <- Google Drive
 └── results/                <- 학습 곡선 그래프 (.png)
 ```
 
-### GitHub
+### GitHub 커밋 이력
 
-- 레포 생성: https://github.com/HyunDove/supermario-dqn
-- 초기 커밋: `feat: 슈퍼마리오 DQN 프로젝트 초기 구조`
-- 2차 커밋: `feat: 에피소드별 영상 기록 및 학습 곡선 그래프 추가`
+| 커밋 | 내용 |
+|---|---|
+| 1차 | `feat: 슈퍼마리오 DQN 프로젝트 초기 구조` |
+| 2차 | `feat: 에피소드별 영상 기록 및 학습 곡선 그래프 추가` |
+| 3차 | `docs: 프로젝트 진행 현황 보고서 추가` |
+| 4차 | `feat: 에피소드 비교 탭 추가 (EP 0/1000/5000/7000 영상 비교)` |
 
 ---
 
@@ -78,7 +93,6 @@ supermario_dl_project/      <- Google Drive
 
 ### 1일차 남은 작업 (오늘)
 
-- [ ] 소스 파일 전체 주석 추가 (wrappers, dqn, dqn_agent, replay_buffer, recorder, train.py)
 - [ ] Colab에서 환경 설치 및 테스트 실행 (1~2 에피소드 정상 동작 확인)
 
 ### 2일차
@@ -99,7 +113,7 @@ supermario_dl_project/      <- Google Drive
 - [ ] 학습 곡선 그래프 최종 저장
 - [ ] 영상 4개 비교 (0 -> 1000 -> 5000 -> 7000 성장 과정 확인)
 - [ ] 학습된 모델(.pth) GitHub Releases 업로드
-- [ ] Streamlit 앱에 영상 4개 비교 탭 추가 (선택)
+- [ ] Streamlit 에피소드 비교 탭 최종 확인
 
 ### 7일차
 
@@ -132,4 +146,6 @@ supermario_dl_project/      <- Google Drive
 
 - **세션 끊긴 후 재개**: `CHECKPOINT_PATH` 를 마지막 저장 모델 경로로 변경 후 Colab 1번 셀부터 재실행
 - **모델 가중치**: `.gitignore`로 git 제외 -> Google Drive에만 저장
-- **Colab 제한**: 무료 T4 기준 최대 12시간 연속 실행 가능, 유휴 90분 초과 시 세션 끊김
+- **Colab 제한**: 무료 T4 기준 최대 12시간 연속 실행 가능, 학습 중에는 비활성 끊김 없음
+- **예상 학습 시간**: T4 GPU 기준 7,000 에피소드 약 5~8시간 (1회 세션 완주 가능)
+- **코드 수정 시**: VS Code에서 수정 -> git push -> Colab 4번 셀 git pull 후 재실행
