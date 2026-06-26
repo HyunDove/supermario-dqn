@@ -153,17 +153,30 @@ supermario_dl_project/
 
 > 2배속 · 30초 녹화 | EP 0(무작위) → EP 10000(학습 완료) 순서로 성장 과정 확인
 
-| EP 0 — 무작위 (ε=1.0) | EP 2000 — 초기 학습 |
-|:---:|:---:|
-| ![EP0](reports/gif/mario_ep0000.gif) | ![EP2000](reports/gif/mario_ep2000.gif) |
-
-| EP 5000 — 중기 학습 | EP 7000 — 후기 학습 |
-|:---:|:---:|
-| ![EP5000](reports/gif/mario_ep5000.gif) | ![EP7000](reports/gif/mario_ep7000.gif) |
-
-| EP 10000 — 최종 결과 |
-|:---:|
-| ![EP10000](reports/gif/mario_ep10000.gif) |
+<table>
+  <tr>
+    <th align="center">EP 0 — 무작위 (ε=1.0)</th>
+    <th align="center">EP 2000 — 초기 학습</th>
+  </tr>
+  <tr>
+    <td align="center"><img src="reports/gif/mario_ep0000.gif" width="300"/></td>
+    <td align="center"><img src="reports/gif/mario_ep2000.gif" width="300"/></td>
+  </tr>
+  <tr>
+    <th align="center">EP 5000 — 중기 학습</th>
+    <th align="center">EP 7000 — 후기 학습</th>
+  </tr>
+  <tr>
+    <td align="center"><img src="reports/gif/mario_ep5000.gif" width="300"/></td>
+    <td align="center"><img src="reports/gif/mario_ep7000.gif" width="300"/></td>
+  </tr>
+  <tr>
+    <th align="center" colspan="2">EP 10000 — 최종 결과</th>
+  </tr>
+  <tr>
+    <td align="center" colspan="2"><img src="reports/gif/mario_ep10000.gif" width="300"/></td>
+  </tr>
+</table>
 
 ---
 
