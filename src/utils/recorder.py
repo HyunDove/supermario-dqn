@@ -7,13 +7,13 @@ import os
 _RECORD_FPS = 15
 
 
-def record_episode(env_fn, agent, save_path, epsilon=0.05, target_steps=300):
+def record_episode(env_fn, agent, save_path, epsilon=0.05,
+                   target_steps=300, playback_speed=1.0):
     """
     에이전트 플레이 영상 녹화
 
-    target_steps: 녹화할 스텝 수. 에피소드가 일찍 끝나면 재시작해 채우고,
-                  에피소드가 길어도 이 스텝에서 즉시 중단 → 항상 고정 길이
-                  (15fps 기준: 300스텝 = 20초, 450스텝 = 30초)
+    target_steps   : 녹화할 스텝 수 (15fps 기준: 300 = 20초, 450 = 30초)
+    playback_speed : 재생 배속 (1.0 = 실제 게임 속도, 2.0 = 2배속, 0.5 = 0.5배속)
     """
     env = env_fn()
     agent.epsilon = epsilon
@@ -37,5 +37,5 @@ def record_episode(env_fn, agent, save_path, epsilon=0.05, target_steps=300):
 
     env.close()
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
-    imageio.mimsave(save_path, frames, fps=_RECORD_FPS)
+    imageio.mimsave(save_path, frames, fps=_RECORD_FPS * playback_speed)
     return total_reward, len(frames)
