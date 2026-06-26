@@ -76,7 +76,7 @@ Flatten → Linear(3136 → 512) → ReLU → Linear(512 → 7)
 ### 학습 흐름
 
 ```
-게임 화면 → 그레이스케일 → 84×84 리사이즈 → 4프레임 스택
+게임 화면 → 4프레임 스킵 → 그레이스케일 → 84×84 리사이즈 → 4프레임 스택
      ↓
 CNN → Q값 예측 → ε-greedy 행동 선택
      ↓
@@ -104,7 +104,9 @@ supermario_dl_project/
 │   ├── env/wrappers.py              # 환경 전처리 (그레이스케일·리사이즈·프레임스택)
 │   ├── model/dqn.py                 # CNN DQN 신경망 구조
 │   ├── agent/dqn_agent.py           # DQN 에이전트 (학습·저장·로드)
-│   └── utils/replay_buffer.py       # Experience Replay Buffer
+│   └── utils/
+│       ├── replay_buffer.py         # Experience Replay Buffer
+│       └── recorder.py              # 에피소드 플레이 영상 녹화 유틸
 │
 ├── 📂 app/
 │   └── streamlit_app.py             # Streamlit 시연 웹앱
@@ -151,6 +153,7 @@ supermario_dl_project/
 | 탭 | 내용 |
 |---|---|
 | 🎮 **시연** | 학습된 모델 선택 → 에이전트 플레이 영상 실시간 생성 |
+| 🎬 **에피소드 비교** | EP 0/1000/5000/7000 플레이 영상 비교 (무작위 → 학습 성장 과정) |
 | 📈 **학습 곡선** | 에피소드별 보상 변화 그래프 |
 | 🧠 **모델 구조** | CNN 구조 + 하이퍼파라미터 요약 |
 
@@ -198,7 +201,7 @@ streamlit run app/streamlit_app.py
 🎮 SuperMarioBros-1-1-v0 환경
      ↓
 🔧 전처리 (src/env/wrappers.py)
-   그레이스케일 → 84×84 리사이즈 → 4프레임 스택 → 4프레임 스킵
+   4프레임 스킵 → 그레이스케일 → 84×84 리사이즈 → 4프레임 스택
      ↓
 🧠 DQN 학습 (Google Colab T4 GPU)
    CNN Policy Net + Target Net + Replay Buffer
@@ -222,7 +225,9 @@ streamlit run app/streamlit_app.py
 - [x] Experience Replay Buffer 구현 (`src/utils/replay_buffer.py`)
 - [x] 학습 스크립트 구현 (`train.py`)
 - [x] Google Colab 학습 노트북 (`colab/train.ipynb`)
+- [x] 영상 녹화 유틸 구현 (`src/utils/recorder.py`)
+- [x] Streamlit 시연 앱 4탭 구성 (`app/streamlit_app.py`)
+- [x] Colab 환경 호환성 트러블슈팅 (numpy 2.0 · gym 0.26 · 영상 깨짐 수정)
 - [ ] Colab 학습 실행 (진행 중)
 - [ ] 학습 결과 분석 및 곡선 시각화
-- [ ] Streamlit 시연 앱 완성
 - [ ] 학습된 모델 GitHub Releases 업로드
