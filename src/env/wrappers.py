@@ -28,7 +28,12 @@ class GrayScaleObservation(gym.Wrapper):
         return self.observation(obs)
 
     def step(self, action):
-        obs, reward, done, info = self.env.step(action)
+        result = self.env.step(action)
+        if len(result) == 5:
+            obs, reward, terminated, truncated, info = result
+            done = terminated or truncated
+        else:
+            obs, reward, done, info = result
         return self.observation(obs), reward, done, info
 
 
@@ -54,7 +59,12 @@ class ResizeObservation(gym.Wrapper):
         return self.observation(obs)
 
     def step(self, action):
-        obs, reward, done, info = self.env.step(action)
+        result = self.env.step(action)
+        if len(result) == 5:
+            obs, reward, terminated, truncated, info = result
+            done = terminated or truncated
+        else:
+            obs, reward, done, info = result
         return self.observation(obs), reward, done, info
 
 
@@ -70,9 +80,13 @@ class SkipFrame(gym.Wrapper):
 
     def step(self, action):
         total_reward = 0.0
-        # 같은 행동을 skip번 반복 실행하며 보상 누적
         for _ in range(self._skip):
-            obs, reward, done, info = self.env.step(action)
+            result = self.env.step(action)
+            if len(result) == 5:
+                obs, reward, terminated, truncated, info = result
+                done = terminated or truncated
+            else:
+                obs, reward, done, info = result
             total_reward += reward
             if done:
                 break
@@ -106,8 +120,12 @@ class FrameStack(gym.Wrapper):
         return np.array(self.frames)
 
     def step(self, action):
-        obs, reward, done, info = self.env.step(action)
-        # 새 프레임 추가 (가장 오래된 프레임은 자동 삭제)
+        result = self.env.step(action)
+        if len(result) == 5:
+            obs, reward, terminated, truncated, info = result
+            done = terminated or truncated
+        else:
+            obs, reward, done, info = result
         self.frames.append(obs)
         return np.array(self.frames), reward, done, info
 
