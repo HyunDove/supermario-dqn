@@ -8,6 +8,10 @@ results/
 *.mp4
 *.gif
 
+# README용 GIF는 추적
+!reports/gif/
+!reports/gif/*.gif
+
 # Python
 __pycache__/
 *.pyc

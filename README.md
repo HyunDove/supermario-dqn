@@ -143,6 +143,27 @@ supermario_dl_project/
 | Replay Buffer 크기 | 50,000 |
 | Target Network 업데이트 주기 | 1,000 스텝 |
 | 프레임 스킵 | 4 |
+| 총 학습 에피소드 | 10,000 |
+| 체크포인트 저장 주기 | 500 에피소드 |
+| 영상·그래프 기록 시점 | EP 0 / 2000 / 5000 / 7000 / 10000 |
+
+---
+
+## 🎬 에피소드별 플레이 영상
+
+> 2배속 · 30초 녹화 | EP 0(무작위) → EP 10000(학습 완료) 순서로 성장 과정 확인
+
+| EP 0 — 무작위 (ε=1.0) | EP 2000 — 초기 학습 |
+|:---:|:---:|
+| ![EP0](reports/gif/mario_ep0000.gif) | ![EP2000](reports/gif/mario_ep2000.gif) |
+
+| EP 5000 — 중기 학습 | EP 7000 — 후기 학습 |
+|:---:|:---:|
+| ![EP5000](reports/gif/mario_ep5000.gif) | ![EP7000](reports/gif/mario_ep7000.gif) |
+
+| EP 10000 — 최종 결과 |
+|:---:|
+| ![EP10000](reports/gif/mario_ep10000.gif) |
 
 ---
 
@@ -153,7 +174,7 @@ supermario_dl_project/
 | 탭 | 내용 |
 |---|---|
 | 🎮 **시연** | 학습된 모델 선택 → 에이전트 플레이 영상 실시간 생성 |
-| 🎬 **에피소드 비교** | EP 0/1000/5000/7000 플레이 영상 비교 (무작위 → 학습 성장 과정) |
+| 🎬 **에피소드 비교** | EP 0/2000/5000/7000/10000 플레이 영상 비교 (무작위 → 학습 성장 과정) |
 | 📈 **학습 곡선** | 에피소드별 보상 변화 그래프 |
 | 🧠 **모델 구조** | CNN 구조 + 하이퍼파라미터 요약 |
 
@@ -171,12 +192,13 @@ pip install -r requirements.txt
 
 1. `colab/train.ipynb` 을 Colab에 업로드
 2. 런타임 → **T4 GPU** 선택
-3. 3번 셀 `GITHUB_REPO` 주소 수정
-4. 순서대로 실행 → 모델이 Google Drive에 자동 저장
+3. **GitHub 클론 셀**에서 `GITHUB_REPO` 주소 수정
+4. **TensorBoard 셀** 먼저 실행 → 실시간 모니터링 창 열림
+5. **학습 실행 셀** 실행 → 모델·영상·그래프가 Google Drive에 자동 저장
 
 ```
 세션 끊긴 후 이어서 학습:
-  CHECKPOINT_PATH = f'{DRIVE_PATH}/models/mario_ep1000.pth'
+  CHECKPOINT_PATH = f'{DRIVE_PATH}/models/mario_ep500.pth'  # 원하는 에피소드
   → 1번 셀부터 재실행
 ```
 
@@ -205,7 +227,10 @@ streamlit run app/streamlit_app.py
      ↓
 🧠 DQN 학습 (Google Colab T4 GPU)
    CNN Policy Net + Target Net + Replay Buffer
-   200 에피소드마다 Google Drive에 체크포인트 저장
+   500 에피소드마다 Google Drive에 체크포인트 저장
+     ↓
+📡 TensorBoard 실시간 모니터링
+   보상·epsilon·학습 스텝 실시간 확인
      ↓
 📊 결과 분석
    학습 곡선 (보상 변화) + 플레이 영상 생성
@@ -228,6 +253,8 @@ streamlit run app/streamlit_app.py
 - [x] 영상 녹화 유틸 구현 (`src/utils/recorder.py`)
 - [x] Streamlit 시연 앱 4탭 구성 (`app/streamlit_app.py`)
 - [x] Colab 환경 호환성 트러블슈팅 (numpy 2.0 · gym 0.26 · 영상 깨짐 수정)
-- [ ] Colab 학습 실행 (진행 중)
+- [x] TensorBoard 실시간 모니터링 연동
+- [x] 체크포인트 그래프 자동 저장 (EP 0/2000/5000/7000/10000)
+- [ ] Colab 학습 실행 (진행 중 — 10,000 에피소드)
 - [ ] 학습 결과 분석 및 곡선 시각화
 - [ ] 학습된 모델 GitHub Releases 업로드
