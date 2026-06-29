@@ -363,11 +363,11 @@ with tab1:
                     '🎮<br><small>준비 중</small></div>')
 
     st.markdown(f"""
+<div style="text-align:center; margin-bottom:8px;">
+  <span class="ep-badge" style="background:{cp10k['badge_bg']};">{cp10k['tag']}</span>
+</div>
 <div style="display:flex; gap:28px; align-items:flex-start;">
   <div style="flex:1.5; min-width:0;">
-    <div style="text-align:center; margin-bottom:8px;">
-      <span class="ep-badge" style="background:{cp10k['badge_bg']};">{cp10k['tag']}</span>
-    </div>
     {gif_html}
     <p class="ep-label">{cp10k['label']}</p>
     <p class="ep-desc">{cp10k['desc']}</p>
