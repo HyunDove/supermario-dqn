@@ -260,7 +260,7 @@ CHECKPOINTS = [
         "tag":      "FINAL CHECKPOINT",
         "desc":     "EP 10000 클리어 이후 최종 학습",
         "detail":   "EP 10000 스테이지 클리어 달성 이후 추가 학습된 최종 체크포인트. 100회 평균 보상 1,590 기록.",
-        "gif":      rp("reports", "gif", "mario_ep10000.gif"),
+        "gif":      rp("reports", "gif", "mario_ep10000_clear.gif"),
         "curve":    rp("reports", "screenshot", "curve_ep10000.png"),
         "epsilon":  0.1,
         "steps":    1593659,

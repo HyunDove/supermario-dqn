@@ -175,7 +175,7 @@ supermario_dl_project/
     <th align="center" colspan="2">EP 10000 — 최종 결과</th>
   </tr>
   <tr>
-    <td align="center" colspan="2"><img src="reports/gif/mario_ep10000.gif" width="300"/></td>
+    <td align="center" colspan="2"><img src="reports/gif/mario_ep10000_clear.gif" width="300"/></td>
   </tr>
 </table>
 
