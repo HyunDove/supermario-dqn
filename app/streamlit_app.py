@@ -363,13 +363,13 @@ with tab1:
                     '🎮<br><small>준비 중</small></div>')
 
     st.markdown(f"""
-<div style="text-align:center; margin-bottom:8px;">
-  <span class="ep-badge" style="background:{cp10k['badge_bg']};">{cp10k['tag']}</span>
-</div>
 <div style="display:flex; gap:28px; align-items:flex-start;">
   <div style="flex:1.5; min-width:0;">
+    <div style="text-align:center; margin-bottom:8px;">
+      <span class="ep-badge" style="background:{cp10k['badge_bg']};">{cp10k['tag']}</span>
+    </div>
     {gif_html}
-    <p class="ep-label">{cp10k['label']}</p>
+    <p class="ep-label" style="margin-top:12px;">{cp10k['label']}</p>
     <p class="ep-desc">{cp10k['desc']}</p>
     <div style="display:flex; gap:12px; justify-content:center; margin-top:6px;">
       <div style="text-align:center;">
@@ -382,7 +382,7 @@ with tab1:
       </div>
     </div>
   </div>
-  <div style="flex:2; min-width:0;">
+  <div style="flex:2; min-width:0; padding-top:44px;">
     <div style="background:rgba(67,176,71,0.10); border-left:4px solid #43B047;
                 border-radius:6px; padding:18px 20px; margin-bottom:16px;">
       <p style="color:#43B047 !important; font-weight:bold; margin:0 0 10px 0;">🏆 EP 10000 · 1-1 스테이지 클리어 달성</p>
