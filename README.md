@@ -276,8 +276,8 @@ streamlit run app/streamlit_app.py
 - [x] TensorBoard 실시간 모니터링 연동
 - [x] 체크포인트 그래프 자동 저장 (EP 0/2000/5000/7000/10000)
 - [x] EP 0/2000/5000/7000 GIF 기록 및 README 반영
-- [x] 체크포인트별 성능 비교표 작성 (EP 2000/5000/7000 실측 수치)
+- [x] 체크포인트별 성능 비교표 작성 (EP 2000/5000/7000/10000 실측 수치)
 - [x] 학습된 모델 Google Drive 업로드
 - [x] Streamlit 앱 배포 ([supermario-dqn.streamlit.app](https://supermario-dqn.streamlit.app/))
-- [ ] Colab 학습 완료 (진행 중 — 8,500 / 10,000 에피소드)
-- [ ] EP 10000 GIF 및 최종 성능 지표 기입
+- [x] Colab 학습 완료 (10,000 에피소드 · 1,593,659 스텝)
+- [x] EP 10000 GIF 및 최종 성능 지표 기입
