@@ -343,7 +343,7 @@ with tab1:
 
     # ── EP 10000 + DQN 한계 ────────────────────────
     st.divider()
-    st.markdown("## EP 10000 — 최종 학습 결과 · DQN 한계")
+    st.markdown("## EP 10000 — 최종 학습 결과 · 스테이지 클리어")
 
     cp10k = CHECKPOINTS[4]
     gif_data = read_gif(cp10k["gif"])
@@ -357,7 +357,7 @@ with tab1:
 
     st.markdown(f"""
 <div style="display:flex; gap:28px; align-items:flex-start;">
-  <div style="flex:1; min-width:0;">
+  <div style="flex:1.5; min-width:0;">
     <div style="text-align:center; margin-bottom:8px;">
       <span class="ep-badge" style="background:{cp10k['badge_bg']};">{cp10k['tag']}</span>
     </div>
@@ -386,7 +386,7 @@ with tab1:
         EP 0~2000 — 랜덤 탐험에서 우측 전진 패턴 발견<br>
         EP 2000~5000 — 장애물 회피 및 점프 타이밍 학습<br>
         EP 5000~7000 — 전진 전략 고도화, 일관성 향상<br>
-        EP 7000~9000 — 전략 정교화 → <strong style="color:#43B047;">스테이지 완주 달성</strong>
+        EP 7000~10000 — 전략 정교화 → <strong style="color:#43B047;">스테이지 완주 달성</strong>
       </p>
     </div>
     <div style="background:rgba(4,156,216,0.08); border-left:4px solid #049CD8;
