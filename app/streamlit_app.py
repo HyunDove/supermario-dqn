@@ -453,11 +453,15 @@ with tab2:
                     color="#F8B800", linewidth=2.2, label="100-ep Moving Avg")
 
         y_top = max(rewards) * 1.05
+        total_eps = len(rewards)
         for cp in CHECKPOINTS[1:]:
             ep_idx = cp["ep"] - 1
             ax.axvline(x=ep_idx, color=cp["border"], linestyle="--", alpha=0.75, linewidth=1.3)
-            ax.text(ep_idx + 60, y_top * 0.88, cp["label"],
-                    color=cp["border"], fontsize=7.5, ha="left", fontweight="bold")
+            near_end = ep_idx > total_eps * 0.92
+            offset = -80 if near_end else 60
+            ha = "right" if near_end else "left"
+            ax.text(ep_idx + offset, y_top * 0.88, cp["label"],
+                    color=cp["border"], fontsize=7.5, ha=ha, fontweight="bold")
 
         ax.set_xlabel("Episode", color="#aaa", fontsize=10)
         ax.set_ylabel("Total Reward", color="#aaa", fontsize=10)
