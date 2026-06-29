@@ -14,7 +14,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.0-EE4C2C?logo=pytorch&logoColor=white)
 ![Colab](https://img.shields.io/badge/Google_Colab-T4_GPU-F9AB00?logo=googlecolab&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-시연_앱-FF4B4B?logo=streamlit&logoColor=white)
+[![Streamlit](https://img.shields.io/badge/Streamlit-시연_앱-FF4B4B?logo=streamlit&logoColor=white)](https://supermario-dqn.streamlit.app/)
 ![Gym](https://img.shields.io/badge/OpenAI_Gym-SuperMarioBros-0081A5)
 
 ---
@@ -36,9 +36,9 @@
 
 | 구분 | 링크 |
 |---|---|
-| 🌐 **Streamlit 시연 앱** | 추후 업데이트 예정 |
+| 🌐 **Streamlit 시연 앱** | [supermario-dqn.streamlit.app](https://supermario-dqn.streamlit.app/) |
 | 📓 **Colab 학습 노트북** | [colab/train.ipynb](colab/train.ipynb) |
-| 🤖 **학습된 모델** | 추후 GitHub Releases 업로드 예정 |
+| 🤖 **학습된 모델 (Google Drive)** | [Drive 폴더 바로가기](https://drive.google.com/drive/folders/1hPQgsstJj4CmrfOmUaf0wnNgoyYGbxV1?usp=sharing) |
 
 ---
 
@@ -95,7 +95,8 @@ CNN → Q값 예측 → ε-greedy 행동 선택
 supermario_dl_project/
 │
 ├── 📄 train.py                      # 로컬 학습 실행 진입점
-├── 📄 requirements.txt              # Python 의존성
+├── 📄 requirements.txt              # 배포용 의존성 (streamlit · numpy · matplotlib)
+├── 📄 requirements-colab.txt        # Colab 학습용 전체 의존성
 │
 ├── 📂 colab/
 │   └── train.ipynb                  # Google Colab 학습 노트북 (Drive 연동)
@@ -182,14 +183,15 @@ supermario_dl_project/
 
 ## 🖥️ Streamlit 시연 앱
 
+🔗 **[앱 바로가기 →](https://supermario-dqn.streamlit.app/)**
+
 **탭 구성:**
 
 | 탭 | 내용 |
 |---|---|
-| 🎮 **시연** | 학습된 모델 선택 → 에이전트 플레이 영상 실시간 생성 |
-| 🎬 **에피소드 비교** | EP 0/2000/5000/7000/10000 플레이 영상 비교 (무작위 → 학습 성장 과정) |
-| 📈 **학습 곡선** | 에피소드별 보상 변화 그래프 |
-| 🧠 **모델 구조** | CNN 구조 + 하이퍼파라미터 요약 |
+| 🎮 **에피소드 비교** | EP 0/2000/5000/7000 플레이 GIF — 슈퍼마리오 테마 UI로 성장 과정 시각화 |
+| 📈 **학습 성과** | 전체 학습 곡선(8,500 에피소드) + 체크포인트별 성능 비교 표 |
+| 🧠 **모델 구조** | CNN 구조 + 핵심 기법 + 하이퍼파라미터 요약 |
 
 ---
 
@@ -198,7 +200,11 @@ supermario_dl_project/
 ### 1️⃣ 의존성 설치
 
 ```bash
+# Streamlit 앱 실행용 (배포 환경)
 pip install -r requirements.txt
+
+# Colab 학습용 전체 패키지
+pip install -r requirements-colab.txt
 ```
 
 ### 2️⃣ Google Colab 학습 (권장)
@@ -224,9 +230,10 @@ python train.py
 ### 4️⃣ Streamlit 시연 앱 실행
 
 ```bash
-# 학습된 모델(.pth)을 models/ 폴더에 넣은 후 실행
 streamlit run app/streamlit_app.py
 ```
+
+> 학습된 모델(.pth) 다운로드: [Google Drive](https://drive.google.com/drive/folders/1hPQgsstJj4CmrfOmUaf0wnNgoyYGbxV1?usp=sharing) → `models/` 폴더에 배치
 
 ---
 
@@ -264,10 +271,13 @@ streamlit run app/streamlit_app.py
 - [x] 학습 스크립트 구현 (`train.py`)
 - [x] Google Colab 학습 노트북 (`colab/train.ipynb`)
 - [x] 영상 녹화 유틸 구현 (`src/utils/recorder.py`)
-- [x] Streamlit 시연 앱 4탭 구성 (`app/streamlit_app.py`)
+- [x] Streamlit 시연 앱 마리오 테마 UI 구성 (`app/streamlit_app.py`)
 - [x] Colab 환경 호환성 트러블슈팅 (numpy 2.0 · gym 0.26 · 영상 깨짐 수정)
 - [x] TensorBoard 실시간 모니터링 연동
 - [x] 체크포인트 그래프 자동 저장 (EP 0/2000/5000/7000/10000)
-- [ ] Colab 학습 실행 (진행 중 — 10,000 에피소드)
-- [ ] 학습 결과 분석 및 곡선 시각화
-- [ ] 학습된 모델 GitHub Releases 업로드
+- [x] EP 0/2000/5000/7000 GIF 기록 및 README 반영
+- [x] 체크포인트별 성능 비교표 작성 (EP 2000/5000/7000 실측 수치)
+- [x] 학습된 모델 Google Drive 업로드
+- [x] Streamlit 앱 배포 ([supermario-dqn.streamlit.app](https://supermario-dqn.streamlit.app/))
+- [ ] Colab 학습 완료 (진행 중 — 8,500 / 10,000 에피소드)
+- [ ] EP 10000 GIF 및 최종 성능 지표 기입
