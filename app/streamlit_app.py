@@ -2,6 +2,7 @@ import streamlit as st
 import json
 import numpy as np
 import os
+import base64
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -345,50 +346,58 @@ with tab1:
     st.markdown("## EP 10000 — 최종 학습 결과 · DQN 한계")
 
     cp10k = CHECKPOINTS[4]
-    col_gif10k, col_info10k = st.columns([1, 2], gap="large")
-    with col_gif10k:
-        st.markdown(
-            f'<div style="text-align:center; margin-bottom:8px;">'
-            f'<span class="ep-badge" style="background:{cp10k["badge_bg"]};">'
-            f'{cp10k["tag"]}</span></div>',
-            unsafe_allow_html=True,
-        )
-        gif_data = read_gif(cp10k["gif"])
-        if gif_data:
-            st.image(gif_data, use_container_width=True)
-        st.markdown(
-            f'<p class="ep-label">{cp10k["label"]}</p>'
-            f'<p class="ep-desc">{cp10k["desc"]}</p>',
-            unsafe_allow_html=True,
-        )
-        c1, c2 = st.columns(2)
-        with c1: st.metric("100회 평균", f"{cp10k['avg100']:,.0f}")
-        with c2: st.metric("전체 최고", f"{cp10k['best']:,.0f}")
+    gif_data = read_gif(cp10k["gif"])
+    if gif_data:
+        gif_b64 = base64.b64encode(gif_data).decode()
+        gif_html = f'<img src="data:image/gif;base64,{gif_b64}" style="width:100%; border-radius:8px;" />'
+    else:
+        gif_html = ('<div style="background:rgba(255,255,255,0.04); border:2px dashed #444;'
+                    'border-radius:8px; padding:50px 10px; text-align:center; color:#666;">'
+                    '🎮<br><small>준비 중</small></div>')
 
-    with col_info10k:
-        st.markdown("""
-<div style="background:rgba(255,107,53,0.10); border-left:4px solid #FF6B35;
-            border-radius:6px; padding:18px 20px; margin-bottom:16px;">
-<p style="color:#FF6B35 !important; font-weight:bold; margin:0 0 10px 0;">
-⚠️ DQN 성능 상한 (Performance Ceiling)</p>
-<p style="color:#cccccc !important; font-size:0.88rem; line-height:1.7; margin:0;">
-EP 10000까지 학습을 완료했으나, <strong style="color:#F8B800;">실질 전진 거리는 EP 7000과 동일</strong>하며
-추가적인 성능 향상이 관찰되지 않았습니다.<br><br>
-<strong style="color:#ffffff;">원인 분석:</strong><br>
-① Q값 과대추정 누적 — Vanilla DQN의 구조적 Overestimation Bias<br>
-② ε 고정(0.1) 후 새로운 전략 탐험 사실상 불가<br>
-③ Replay Buffer 내 동일 구간 경험이 포화되어 학습 다양성 감소
-</p>
-</div>
-<div style="background:rgba(4,156,216,0.08); border-left:4px solid #049CD8;
-            border-radius:6px; padding:14px 20px;">
-<p style="color:#049CD8 !important; font-weight:bold; margin:0 0 8px 0;">
-💡 개선 방향</p>
-<p style="color:#cccccc !important; font-size:0.85rem; line-height:1.7; margin:0;">
-<strong>Double DQN</strong> — 행동 선택과 Q값 평가를 분리하여 과대추정 억제<br>
-<strong>Prioritized Experience Replay</strong> — 중요 경험에 높은 샘플링 확률 부여<br>
-<strong>Dueling DQN</strong> — 상태 가치와 행동 이점을 분리 추정
-</p>
+    st.markdown(f"""
+<div style="display:flex; gap:28px; align-items:flex-start;">
+  <div style="flex:1; min-width:0;">
+    <div style="text-align:center; margin-bottom:8px;">
+      <span class="ep-badge" style="background:{cp10k['badge_bg']};">{cp10k['tag']}</span>
+    </div>
+    {gif_html}
+    <p class="ep-label">{cp10k['label']}</p>
+    <p class="ep-desc">{cp10k['desc']}</p>
+    <div style="display:flex; gap:12px; justify-content:center; margin-top:6px;">
+      <div style="text-align:center;">
+        <div style="color:#888888; font-size:0.72rem;">100회 평균</div>
+        <div style="color:#F8B800; font-size:1.25rem; font-weight:bold;">{cp10k['avg100']:,.0f}</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="color:#888888; font-size:0.72rem;">전체 최고</div>
+        <div style="color:#F8B800; font-size:1.25rem; font-weight:bold;">{cp10k['best']:,.0f}</div>
+      </div>
+    </div>
+  </div>
+  <div style="flex:2; min-width:0;">
+    <div style="background:rgba(255,107,53,0.10); border-left:4px solid #FF6B35;
+                border-radius:6px; padding:18px 20px; margin-bottom:16px;">
+      <p style="color:#FF6B35 !important; font-weight:bold; margin:0 0 10px 0;">⚠️ DQN 성능 상한 (Performance Ceiling)</p>
+      <p style="color:#cccccc !important; font-size:0.88rem; line-height:1.7; margin:0;">
+        EP 10000까지 학습을 완료했으나, <strong style="color:#F8B800;">실질 전진 거리는 EP 7000과 동일</strong>하며
+        추가적인 성능 향상이 관찰되지 않았습니다.<br><br>
+        <strong style="color:#ffffff;">원인 분석:</strong><br>
+        ① Q값 과대추정 누적 — Vanilla DQN의 구조적 Overestimation Bias<br>
+        ② ε 고정(0.1) 후 새로운 전략 탐험 사실상 불가<br>
+        ③ Replay Buffer 내 동일 구간 경험이 포화되어 학습 다양성 감소
+      </p>
+    </div>
+    <div style="background:rgba(4,156,216,0.08); border-left:4px solid #049CD8;
+                border-radius:6px; padding:14px 20px;">
+      <p style="color:#049CD8 !important; font-weight:bold; margin:0 0 8px 0;">💡 개선 방향</p>
+      <p style="color:#cccccc !important; font-size:0.85rem; line-height:1.7; margin:0;">
+        <strong>Double DQN</strong> — 행동 선택과 Q값 평가를 분리하여 과대추정 억제<br>
+        <strong>Prioritized Experience Replay</strong> — 중요 경험에 높은 샘플링 확률 부여<br>
+        <strong>Dueling DQN</strong> — 상태 가치와 행동 이점을 분리 추정
+      </p>
+    </div>
+  </div>
 </div>
 """, unsafe_allow_html=True)
 
