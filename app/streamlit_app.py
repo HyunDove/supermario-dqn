@@ -359,13 +359,13 @@ with tab2:
         ax.set_facecolor("#070d28")
 
         x = np.arange(len(rewards))
-        ax.plot(x, rewards, alpha=0.18, color="#7ec8e3", linewidth=0.6, label="에피소드 보상")
+        ax.plot(x, rewards, alpha=0.18, color="#7ec8e3", linewidth=0.6, label="Episode Reward")
 
         window = 100
         if len(rewards) >= window:
             avg = np.convolve(rewards, np.ones(window) / window, mode="valid")
             ax.plot(np.arange(window - 1, len(rewards)), avg,
-                    color="#F8B800", linewidth=2.2, label="100회 이동 평균")
+                    color="#F8B800", linewidth=2.2, label="100-ep Moving Avg")
 
         y_top = max(rewards) * 1.05
         for cp in CHECKPOINTS[1:]:
@@ -374,8 +374,8 @@ with tab2:
             ax.text(ep_idx + 60, y_top * 0.88, cp["label"],
                     color=cp["border"], fontsize=7.5, ha="left", fontweight="bold")
 
-        ax.set_xlabel("에피소드", color="#aaa", fontsize=10)
-        ax.set_ylabel("총 보상", color="#aaa", fontsize=10)
+        ax.set_xlabel("Episode", color="#aaa", fontsize=10)
+        ax.set_ylabel("Total Reward", color="#aaa", fontsize=10)
         ax.set_ylim(bottom=0)
         ax.tick_params(colors="#888", labelsize=9)
         for spine in ax.spines.values():
