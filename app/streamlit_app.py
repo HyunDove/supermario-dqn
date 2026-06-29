@@ -339,11 +339,11 @@ with tab1:
                 f'<div style="display:flex; gap:12px; justify-content:center; margin-top:6px;">'
                 f'<div style="text-align:center;">'
                 f'<div style="color:#888888; font-size:0.72rem;">평균 보상</div>'
-                f'<div style="color:#F8B800; font-size:1.25rem; font-weight:bold;">{cp["avg100"]:,.0f}</div>'
+                f'<div style="color:#ffffff; font-size:1.25rem; font-weight:bold;">{cp["avg100"]:,.0f}</div>'
                 f'</div>'
                 f'<div style="text-align:center;">'
                 f'<div style="color:#888888; font-size:0.72rem;">최고 보상</div>'
-                f'<div style="color:#F8B800; font-size:1.25rem; font-weight:bold;">{cp["best"]:,.0f}</div>'
+                f'<div style="color:#ffffff; font-size:1.25rem; font-weight:bold;">{cp["best"]:,.0f}</div>'
                 f'</div></div>',
                 unsafe_allow_html=True,
             )
