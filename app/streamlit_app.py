@@ -240,9 +240,9 @@ CHECKPOINTS = [
     {
         "ep":       7000,
         "label":    "EP 7000",
-        "tag":      "LATE STAGE",
-        "desc":     "전진 전략 고도화",
-        "detail":   "안정적인 전진 전략이 완성되어 일관성 있는 고득점을 기록.",
+        "tag":      "LATE STAGE · BEST",
+        "desc":     "실질적 최고 성능 도달",
+        "detail":   "안정적인 전진 전략이 완성. 전체 최고 보상 3,059 달성 — DQN 기준 실질 최고 지점.",
         "gif":      rp("reports", "gif", "mario_ep7000.gif"),
         "curve":    rp("reports", "screenshot", "curve_ep7000.png"),
         "epsilon":  0.1,
@@ -252,6 +252,22 @@ CHECKPOINTS = [
         "best":     3059.0,
         "border":   "#E52521",
         "badge_bg": "#a81b19",
+    },
+    {
+        "ep":       10000,
+        "label":    "EP 10000",
+        "tag":      "FINAL · DQN LIMIT",
+        "desc":     "성능 수렴 — DQN 한계 도달",
+        "detail":   "100회 평균 1,590으로 수치 소폭 향상. 그러나 실질 전진 거리는 EP 7000과 동일 — DQN 구조의 성능 상한.",
+        "gif":      rp("reports", "gif", "mario_ep10000.gif"),
+        "curve":    rp("reports", "screenshot", "curve_ep10000.png"),
+        "epsilon":  0.1,
+        "steps":    1593659,
+        "avg100":   1590.0,
+        "max100":   3059.0,
+        "best":     3062.0,
+        "border":   "#FF6B35",
+        "badge_bg": "#8B3A1A",
     },
 ]
 
@@ -263,16 +279,16 @@ st.markdown('<div class="hero-stars">⭐ 🍄 ⭐</div>', unsafe_allow_html=True
 st.markdown('<p class="hero-title">SUPER MARIO DQN</p>', unsafe_allow_html=True)
 st.markdown(
     '<p class="hero-subtitle">'
-    'Deep Q-Network 강화학습으로 마리오를 자율 플레이 &nbsp;·&nbsp; 총 8,500 에피소드 학습'
+    'Deep Q-Network 강화학습으로 마리오를 자율 플레이 &nbsp;·&nbsp; 총 10,000 에피소드 학습 완료'
     '</p>',
     unsafe_allow_html=True,
 )
 
 m1, m2, m3, m4 = st.columns(4)
-with m1: st.metric("🎮 학습 에피소드", "8,500")
-with m2: st.metric("⚡ 총 학습 스텝", "1,019,666+")
-with m3: st.metric("🏆 최고 달성 보상", "3,059")
-with m4: st.metric("📈 보상 성장", "+134%", delta="EP 0 → EP 7000 평균 기준")
+with m1: st.metric("🎮 학습 에피소드", "10,000")
+with m2: st.metric("⚡ 총 학습 스텝", "1,593,659")
+with m3: st.metric("🏆 최고 달성 보상", "3,062")
+with m4: st.metric("📈 보상 성장", "+169%", delta="EP 0 → EP 10000 평균 기준")
 
 st.divider()
 
@@ -288,11 +304,11 @@ tab1, tab2, tab3 = st.tabs(["🎮  에피소드 비교", "📈  학습 성과", 
 # ──────────────────────────────────────────────────
 with tab1:
     st.markdown("## 학습 단계별 마리오 성장")
-    st.caption("각 체크포인트에서의 실제 플레이 영상입니다. 에피소드가 쌓일수록 마리오가 더 멀리 달립니다.")
+    st.caption("EP 0 → EP 7000: 학습 진행에 따른 성장. EP 10000: DQN 성능 상한 도달로 추가 향상 없음.")
     st.markdown("")
 
     cols = st.columns(4, gap="medium")
-    for i, cp in enumerate(CHECKPOINTS):
+    for i, cp in enumerate(CHECKPOINTS[:4]):
         with cols[i]:
             st.markdown(
                 f'<div style="text-align:center; margin-bottom:8px;">'
@@ -324,12 +340,64 @@ with tab1:
             with col_b:
                 st.metric("최고 보상", f"{cp['best']:,.0f}")
 
+    # ── EP 10000 + DQN 한계 ────────────────────────
+    st.divider()
+    st.markdown("## EP 10000 — 최종 학습 결과 · DQN 한계")
+
+    cp10k = CHECKPOINTS[4]
+    col_gif10k, col_info10k = st.columns([1, 2], gap="large")
+    with col_gif10k:
+        st.markdown(
+            f'<div style="text-align:center; margin-bottom:8px;">'
+            f'<span class="ep-badge" style="background:{cp10k["badge_bg"]};">'
+            f'{cp10k["tag"]}</span></div>',
+            unsafe_allow_html=True,
+        )
+        gif_data = read_gif(cp10k["gif"])
+        if gif_data:
+            st.image(gif_data, use_container_width=True)
+        st.markdown(
+            f'<p class="ep-label">{cp10k["label"]}</p>'
+            f'<p class="ep-desc">{cp10k["desc"]}</p>',
+            unsafe_allow_html=True,
+        )
+        c1, c2 = st.columns(2)
+        with c1: st.metric("100회 평균", f"{cp10k['avg100']:,.0f}")
+        with c2: st.metric("전체 최고", f"{cp10k['best']:,.0f}")
+
+    with col_info10k:
+        st.markdown("""
+<div style="background:rgba(255,107,53,0.10); border-left:4px solid #FF6B35;
+            border-radius:6px; padding:18px 20px; margin-bottom:16px;">
+<p style="color:#FF6B35 !important; font-weight:bold; margin:0 0 10px 0;">
+⚠️ DQN 성능 상한 (Performance Ceiling)</p>
+<p style="color:#cccccc !important; font-size:0.88rem; line-height:1.7; margin:0;">
+EP 10000까지 학습을 완료했으나, <strong style="color:#F8B800;">실질 전진 거리는 EP 7000과 동일</strong>하며
+추가적인 성능 향상이 관찰되지 않았습니다.<br><br>
+<strong style="color:#ffffff;">원인 분석:</strong><br>
+① Q값 과대추정 누적 — Vanilla DQN의 구조적 Overestimation Bias<br>
+② ε 고정(0.1) 후 새로운 전략 탐험 사실상 불가<br>
+③ Replay Buffer 내 동일 구간 경험이 포화되어 학습 다양성 감소
+</p>
+</div>
+<div style="background:rgba(4,156,216,0.08); border-left:4px solid #049CD8;
+            border-radius:6px; padding:14px 20px;">
+<p style="color:#049CD8 !important; font-weight:bold; margin:0 0 8px 0;">
+💡 개선 방향</p>
+<p style="color:#cccccc !important; font-size:0.85rem; line-height:1.7; margin:0;">
+<strong>Double DQN</strong> — 행동 선택과 Q값 평가를 분리하여 과대추정 억제<br>
+<strong>Prioritized Experience Replay</strong> — 중요 경험에 높은 샘플링 확률 부여<br>
+<strong>Dueling DQN</strong> — 상태 가치와 행동 이점을 분리 추정
+</p>
+</div>
+""", unsafe_allow_html=True)
+
     # ── 성장 요약 ──────────────────────────────────
     st.divider()
     st.markdown("## 체크포인트별 평균 보상 변화")
 
     base = CHECKPOINTS[0]["avg100"]
-    sc = st.columns(4)
+    sc = st.columns(5)
     for col, cp in zip(sc, CHECKPOINTS):
         with col:
             delta_str = f"+{cp['avg100'] - base:.0f}" if cp["ep"] > 0 else None
@@ -392,20 +460,31 @@ with tab2:
     st.markdown("")
     st.markdown("## 체크포인트별 성능 비교")
     st.markdown("""
-| 체크포인트 | 총 학습 스텝 | ε | 100회 평균 보상 | 100회 최고 보상 | 전체 최고 보상 |
-|:---:|---:|:---:|---:|---:|---:|
-| EP 0 | 0 | 1.0000 | 592.0 | 592.0 | 592.0 |
-| EP 2000 | 269,649 | 0.1000 | 860.7 | 1,904.0 | 2,874.0 |
-| EP 5000 | 686,248 | 0.1000 | 1,222.6 | 2,916.0 | 3,059.0 |
-| EP 7000 | 1,019,666 | 0.1000 | 1,387.2 | 3,047.0 | 3,059.0 |
-| EP 10000 | — | 0.1000 | 학습 후 기입 | — | — |
+| 체크포인트 | 총 학습 스텝 | ε | 100회 평균 보상 | 100회 최고 보상 | 전체 최고 보상 | 비고 |
+|:---:|---:|:---:|---:|---:|---:|---|
+| EP 0 | 0 | 1.0000 | 592.0 | 592.0 | 592.0 | 베이스라인 |
+| EP 2000 | 269,649 | 0.1000 | 860.7 | 1,904.0 | 2,874.0 | 초기 학습 |
+| EP 5000 | 686,248 | 0.1000 | 1,222.6 | 2,916.0 | 3,059.0 | 최고 보상 최초 달성 |
+| EP 7000 | 1,019,666 | 0.1000 | 1,387.2 | 3,047.0 | 3,059.0 | ⭐ 실질 최고 성능 |
+| EP 10000 | 1,593,659 | 0.1000 | 1,590.0 | 3,059.0 | 3,062.0 | ⚠️ DQN 성능 상한 수렴 |
 """)
-    st.caption("ε은 약 230,000 스텝(EP 2000 이전)에 최솟값 0.1 도달 — 이후 전 구간 exploitation 위주 학습")
+    st.caption("EP 5000 이후 전체 최고 보상 3,059~3,062 수준 정체 — Vanilla DQN 구조의 성능 상한에 도달")
+
+    st.markdown("""
+<div style="background:rgba(255,107,53,0.08); border:1px solid rgba(255,107,53,0.3);
+            border-radius:8px; padding:14px 18px; margin-top:8px;">
+<p style="color:#FF6B35 !important; font-size:0.85rem; margin:0; line-height:1.7;">
+<strong>⚠️ DQN 한계 요약</strong> — EP 10000까지 추가 학습했으나 전진 거리는 EP 7000과 동일.
+전체 최고 보상이 EP 5000(3,059) → EP 10000(3,062)으로 0.1% 미만 개선에 그쳤으며,
+이는 Overestimation Bias·탐험 정체·Buffer 포화에 기인한 <strong>Vanilla DQN의 구조적 한계</strong>입니다.
+</p>
+</div>
+""", unsafe_allow_html=True)
 
     st.divider()
     st.markdown("## 체크포인트별 학습 곡선 이미지")
 
-    for row_cps in [CHECKPOINTS[:2], CHECKPOINTS[2:]]:
+    for row_cps in [CHECKPOINTS[:2], CHECKPOINTS[2:4], [CHECKPOINTS[4]]]:
         rcols = st.columns(2, gap="medium")
         for col, cp in zip(rcols, row_cps):
             with col:
@@ -494,6 +573,6 @@ with tab3:
 | GPU | NVIDIA T4 |
 | Python | 3.12 |
 | PyTorch | 2.x (CUDA 12) |
-| 총 목표 에피소드 | 10,000 |
+| 총 학습 에피소드 | 10,000 (완료) |
 | 기록 시점 | EP 0 / 2000 / 5000 / 7000 / 10000 |
 """)
