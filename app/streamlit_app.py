@@ -243,7 +243,7 @@ CHECKPOINTS = [
         "label":    "EP 7000",
         "tag":      "LATE STAGE",
         "desc":     "전진 전략 고도화",
-        "detail":   "안정적인 전진 전략이 완성되어 일관성 있는 고득점을 기록. EP 9000 클리어로 이어지는 단계.",
+        "detail":   "안정적인 전진 전략이 완성되어 일관성 있는 고득점을 기록. EP 10000 클리어로 이어지는 단계.",
         "gif":      rp("reports", "gif", "mario_ep7000.gif"),
         "curve":    rp("reports", "screenshot", "curve_ep7000.png"),
         "epsilon":  0.1,
@@ -258,8 +258,8 @@ CHECKPOINTS = [
         "ep":       10000,
         "label":    "EP 10000",
         "tag":      "FINAL CHECKPOINT",
-        "desc":     "EP 9000 클리어 이후 최종 학습",
-        "detail":   "EP 9000 스테이지 클리어 달성 이후 추가 학습된 최종 체크포인트. 100회 평균 보상 1,590 기록.",
+        "desc":     "EP 10000 클리어 이후 최종 학습",
+        "detail":   "EP 10000 스테이지 클리어 달성 이후 추가 학습된 최종 체크포인트. 100회 평균 보상 1,590 기록.",
         "gif":      rp("reports", "gif", "mario_ep10000.gif"),
         "curve":    rp("reports", "screenshot", "curve_ep10000.png"),
         "epsilon":  0.1,
@@ -280,7 +280,7 @@ st.markdown('<div class="hero-stars">⭐ 🍄 ⭐</div>', unsafe_allow_html=True
 st.markdown('<p class="hero-title">SUPER MARIO DQN</p>', unsafe_allow_html=True)
 st.markdown(
     '<p class="hero-subtitle">'
-    'Deep Q-Network 강화학습으로 마리오를 자율 플레이 &nbsp;·&nbsp; EP 9000에서 1-1 스테이지 클리어 달성!'
+    'Deep Q-Network 강화학습으로 마리오를 자율 플레이 &nbsp;·&nbsp; EP 10000에서 1-1 스테이지 클리어 달성!'
     '</p>',
     unsafe_allow_html=True,
 )
@@ -288,7 +288,7 @@ st.markdown(
 m1, m2, m3, m4 = st.columns(4)
 with m1: st.metric("🎮 학습 에피소드", "10,000")
 with m2: st.metric("⚡ 총 학습 스텝", "1,593,659")
-with m3: st.metric("🏆 스테이지 클리어", "EP 9000")
+with m3: st.metric("🏆 스테이지 클리어", "EP 10000")
 with m4: st.metric("📈 보상 성장", "+169%", delta="EP 0 → EP 10000 평균 기준")
 
 st.divider()
@@ -305,7 +305,7 @@ tab1, tab2, tab3 = st.tabs(["🎮  에피소드 비교", "📈  학습 성과", 
 # ──────────────────────────────────────────────────
 with tab1:
     st.markdown("## 학습 단계별 마리오 성장")
-    st.caption("EP 0 → EP 10000 성장 과정 · EP 9000에서 1-1 스테이지 클리어 달성")
+    st.caption("EP 0 → EP 10000 성장 과정 · EP 10000에서 1-1 스테이지 클리어 달성")
     st.markdown("")
 
     cols = st.columns(4, gap="medium")
@@ -378,9 +378,9 @@ with tab1:
   <div style="flex:2; min-width:0;">
     <div style="background:rgba(67,176,71,0.10); border-left:4px solid #43B047;
                 border-radius:6px; padding:18px 20px; margin-bottom:16px;">
-      <p style="color:#43B047 !important; font-weight:bold; margin:0 0 10px 0;">🏆 EP 9000 · 1-1 스테이지 클리어 달성</p>
+      <p style="color:#43B047 !important; font-weight:bold; margin:0 0 10px 0;">🏆 EP 10000 · 1-1 스테이지 클리어 달성</p>
       <p style="color:#cccccc !important; font-size:0.88rem; line-height:1.7; margin:0;">
-        총 10,000 에피소드 학습 끝에 <strong style="color:#F8B800;">EP 9000에서 슈퍼마리오 1-1 스테이지 클리어</strong>를 달성하였습니다.<br><br>
+        총 10,000 에피소드 학습 끝에 <strong style="color:#F8B800;">EP 10000에서 슈퍼마리오 1-1 스테이지 클리어</strong>를 달성하였습니다.<br><br>
         픽셀(84×84 흑백 화면)만을 입력으로 받는 CNN DQN 에이전트가 별도의 사전 지식 없이 보상 신호만을 통해 스테이지를 완주하였습니다.<br><br>
         <strong style="color:#ffffff;">학습 과정 요약:</strong><br>
         EP 0~2000 — 랜덤 탐험에서 우측 전진 패턴 발견<br>
@@ -476,16 +476,15 @@ with tab2:
 | EP 2000 | 269,649 | 0.1000 | 860.7 | 1,904.0 | 2,874.0 | 초기 학습 |
 | EP 5000 | 686,248 | 0.1000 | 1,222.6 | 2,916.0 | 3,059.0 | 중기 학습 |
 | EP 7000 | 1,019,666 | 0.1000 | 1,387.2 | 3,047.0 | 3,059.0 | 후기 학습 |
-| **EP 9000** | — | 0.1000 | — | — | — | **🏆 1-1 스테이지 클리어** |
-| EP 10000 | 1,593,659 | 0.1000 | 1,590.0 | 3,059.0 | 3,062.0 | 최종 학습 완료 |
+| **EP 10000** | 1,593,659 | 0.1000 | 1,590.0 | 3,059.0 | 3,062.0 | **🏆 1-1 스테이지 클리어** |
 """)
-    st.caption("EP 9000에서 슈퍼마리오 1-1 스테이지 클리어 달성 · 총 10,000 에피소드 학습 완료")
+    st.caption("EP 10000에서 슈퍼마리오 1-1 스테이지 클리어 달성 · 총 10,000 에피소드 학습 완료")
 
     st.markdown("""
 <div style="background:rgba(67,176,71,0.08); border:1px solid rgba(67,176,71,0.3);
             border-radius:8px; padding:14px 18px; margin-top:8px;">
 <p style="color:#43B047 !important; font-size:0.85rem; margin:0; line-height:1.7;">
-<strong>🏆 스테이지 클리어 달성</strong> — EP 9000에서 슈퍼마리오 1-1 스테이지 클리어.
+<strong>🏆 스테이지 클리어 달성</strong> — EP 10000에서 슈퍼마리오 1-1 스테이지 클리어.
 픽셀 입력만으로 동작하는 CNN DQN 에이전트가 보상 신호만을 통해 스테이지를 완주하였습니다.
 </p>
 </div>
