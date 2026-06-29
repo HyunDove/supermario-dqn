@@ -357,7 +357,7 @@ with tab1:
 
     st.markdown(f"""
 <div style="display:flex; gap:28px; align-items:flex-start;">
-  <div style="flex:1.5; min-width:0;">
+  <div style="flex:3; min-width:0;">
     <div style="text-align:center; margin-bottom:8px;">
       <span class="ep-badge" style="background:{cp10k['badge_bg']};">{cp10k['tag']}</span>
     </div>
