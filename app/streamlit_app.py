@@ -171,7 +171,7 @@ div[data-testid="stImage"] img { border-radius: 8px; }
 
 # ── 데이터 로드 ────────────────────────────────────
 @st.cache_data
-def load_rewards():
+def load_rewards(mtime: float = 0.0):
     fp = rp("reports", "screenshot", "rewards_history.json")
     if os.path.exists(fp):
         with open(fp, encoding="utf-8") as f:
@@ -186,7 +186,9 @@ def read_gif(path):
     return None
 
 
-rewards = load_rewards()
+_rewards_fp = rp("reports", "screenshot", "rewards_history.json")
+_rewards_mtime = os.path.getmtime(_rewards_fp) if os.path.exists(_rewards_fp) else 0.0
+rewards = load_rewards(mtime=_rewards_mtime)
 
 # ── 체크포인트 정의 ────────────────────────────────
 CHECKPOINTS = [
@@ -465,6 +467,7 @@ with tab2:
 
         ax.set_xlabel("Episode", color="#aaa", fontsize=10)
         ax.set_ylabel("Total Reward", color="#aaa", fontsize=10)
+        ax.set_xlim(0, len(rewards) - 1)
         ax.set_ylim(bottom=0)
         ax.tick_params(colors="#888", labelsize=9)
         for spine in ax.spines.values():
@@ -477,6 +480,14 @@ with tab2:
         plt.tight_layout()
         st.pyplot(fig)
         plt.close()
+
+    else:
+        st.markdown("## 전체 학습 곡선")
+
+    training_curve_path = rp("reports", "screenshot", "training_curve.png")
+    if os.path.exists(training_curve_path):
+        st.caption("EP 0 ~ EP 10000 전체 학습 곡선 (학습 중 기록)")
+        st.image(training_curve_path, use_container_width=True)
 
     st.markdown("")
     st.markdown("## 체크포인트별 성능 비교")
