@@ -349,7 +349,7 @@ with tab1:
     gif_data = read_gif(cp10k["gif"])
     if gif_data:
         gif_b64 = base64.b64encode(gif_data).decode()
-        gif_html = f'<img src="data:image/gif;base64,{gif_b64}" style="width:100%; border-radius:8px;" />'
+        gif_html = f'<img src="data:image/gif;base64,{gif_b64}" style="width:100%; height:auto; object-fit:fill; border-radius:8px; display:block;" />'
     else:
         gif_html = ('<div style="background:rgba(255,255,255,0.04); border:2px dashed #444;'
                     'border-radius:8px; padding:50px 10px; text-align:center; color:#666;">'
@@ -357,7 +357,7 @@ with tab1:
 
     st.markdown(f"""
 <div style="display:flex; gap:28px; align-items:flex-start;">
-  <div style="flex:3; min-width:0;">
+  <div style="flex:1.5; min-width:0;">
     <div style="text-align:center; margin-bottom:8px;">
       <span class="ep-badge" style="background:{cp10k['badge_bg']};">{cp10k['tag']}</span>
     </div>
