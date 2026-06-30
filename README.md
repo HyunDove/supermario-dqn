@@ -15,6 +15,7 @@
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.0-EE4C2C?logo=pytorch&logoColor=white)
 ![Colab](https://img.shields.io/badge/Google_Colab-T4_GPU-F9AB00?logo=googlecolab&logoColor=white)
 [![Streamlit](https://img.shields.io/badge/Streamlit-시연_앱-FF4B4B?logo=streamlit&logoColor=white)](https://supermario-dqn.streamlit.app/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-산출물-222222?logo=github&logoColor=white)](https://hyundove.github.io/supermario-dqn/)
 ![Gym](https://img.shields.io/badge/OpenAI_Gym-SuperMarioBros-0081A5)
 
 ---
@@ -46,6 +47,7 @@
 | 구분 | 링크 |
 |---|---|
 | 🌐 **Streamlit 시연 앱** | [supermario-dqn.streamlit.app](https://supermario-dqn.streamlit.app/) |
+| 📑 **딥러닝 산출물 (GitHub Pages)** | [hyundove.github.io/supermario-dqn](https://hyundove.github.io/supermario-dqn/) |
 | 📓 **Colab 학습 노트북** | [colab/train.ipynb](colab/train.ipynb) |
 | 🤖 **학습된 모델 (Google Drive)** | [Drive 폴더 바로가기](https://drive.google.com/drive/folders/1hPQgsstJj4CmrfOmUaf0wnNgoyYGbxV1?usp=sharing) |
 
