@@ -32,6 +32,15 @@
 
 ---
 
+## 📄 과제 보고서
+
+[![과제 보고서](https://img.shields.io/badge/과제_보고서-v1.0-4CAF50?logo=github&logoColor=white)](https://github.com/HyunDove/supermario-dqn/releases/tag/v1.0)
+
+> DQN 알고리즘 설계·구현·실험 결과를 정리한 수행내역서입니다.
+> [**📥 DQN_수행내역서.md 다운로드 →**](https://github.com/HyunDove/supermario-dqn/releases/tag/v1.0)
+
+---
+
 ## 🔗 바로가기
 
 | 구분 | 링크 |
