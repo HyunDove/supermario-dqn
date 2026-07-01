@@ -165,6 +165,16 @@ div[data-testid="stImage"] img { border-radius: 8px; }
     color: #777777 !important;
     font-size: 0.78rem !important;
 }
+
+/* BGM 오디오 위젯 - 컨트롤 바 숨김(재생은 계속됨) */
+div[data-testid="stAudio"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -187,10 +197,10 @@ def read_gif(path):
 
 
 @st.cache_data
-def read_audio_base64(path):
+def read_audio_bytes(path):
     if os.path.exists(path):
         with open(path, "rb") as f:
-            return base64.b64encode(f.read()).decode()
+            return f.read()
     return None
 
 
@@ -310,14 +320,9 @@ with bgm_col:
     bgm_on = st.toggle("🎵 BGM 재생", value=True)
 
 if bgm_on:
-    bgm_b64 = read_audio_base64(BGM_PATH)
-    if bgm_b64:
-        st.markdown(
-            f'<audio autoplay loop>'
-            f'<source src="data:audio/mp3;base64,{bgm_b64}" type="audio/mp3">'
-            f'</audio>',
-            unsafe_allow_html=True,
-        )
+    bgm_bytes = read_audio_bytes(BGM_PATH)
+    if bgm_bytes:
+        st.audio(bgm_bytes, format="audio/mp3", autoplay=True, loop=True)
     else:
         st.warning(f"BGM 파일이 없습니다. `{BGM_PATH}` 경로에 mp3 파일을 넣어주세요.")
 
