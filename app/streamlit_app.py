@@ -186,6 +186,16 @@ def read_gif(path):
     return None
 
 
+def read_audio_base64(path):
+    if os.path.exists(path):
+        with open(path, "rb") as f:
+            return base64.b64encode(f.read()).decode()
+    return None
+
+
+BGM_PATH = rp("assets", "bgm.mp3")
+
+
 _rewards_fp = rp("reports", "screenshot", "rewards_history.json")
 _rewards_mtime = os.path.getmtime(_rewards_fp) if os.path.exists(_rewards_fp) else 0.0
 rewards = load_rewards(mtime=_rewards_mtime)
@@ -292,6 +302,23 @@ with m1: st.metric("🎮 학습 에피소드", "10,000")
 with m2: st.metric("⚡ 총 학습 스텝", "1,593,659")
 with m3: st.metric("🏆 스테이지 클리어", "EP 10000")
 with m4: st.metric("📈 보상 성장", "+169%", delta="EP 0 → EP 10000 평균 기준")
+
+# ── BGM 토글 ───────────────────────────────────────
+bgm_col, _ = st.columns([1, 5])
+with bgm_col:
+    bgm_on = st.toggle("🎵 BGM 재생", value=False)
+
+if bgm_on:
+    bgm_b64 = read_audio_base64(BGM_PATH)
+    if bgm_b64:
+        st.markdown(
+            f'<audio autoplay loop>'
+            f'<source src="data:audio/mp3;base64,{bgm_b64}" type="audio/mp3">'
+            f'</audio>',
+            unsafe_allow_html=True,
+        )
+    else:
+        st.warning(f"BGM 파일이 없습니다. `{BGM_PATH}` 경로에 mp3 파일을 넣어주세요.")
 
 st.divider()
 
