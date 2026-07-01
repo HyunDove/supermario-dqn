@@ -165,16 +165,6 @@ div[data-testid="stImage"] img { border-radius: 8px; }
     color: #777777 !important;
     font-size: 0.78rem !important;
 }
-
-/* BGM 오디오 위젯 - 컨트롤 바 숨김(재생은 계속됨) */
-div[data-testid="stAudio"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -194,17 +184,6 @@ def read_gif(path):
         with open(path, "rb") as f:
             return f.read()
     return None
-
-
-@st.cache_data
-def read_audio_bytes(path):
-    if os.path.exists(path):
-        with open(path, "rb") as f:
-            return f.read()
-    return None
-
-
-BGM_PATH = rp("assets", "bgm.mp3")
 
 
 _rewards_fp = rp("reports", "screenshot", "rewards_history.json")
@@ -313,18 +292,6 @@ with m1: st.metric("🎮 학습 에피소드", "10,000")
 with m2: st.metric("⚡ 총 학습 스텝", "1,593,659")
 with m3: st.metric("🏆 스테이지 클리어", "EP 10000")
 with m4: st.metric("📈 보상 성장", "+169%", delta="EP 0 → EP 10000 평균 기준")
-
-# ── BGM 토글 ───────────────────────────────────────
-bgm_col, _ = st.columns([1, 5])
-with bgm_col:
-    bgm_on = st.toggle("🎵 BGM 재생", value=True)
-
-if bgm_on:
-    bgm_bytes = read_audio_bytes(BGM_PATH)
-    if bgm_bytes:
-        st.audio(bgm_bytes, format="audio/mp3", autoplay=True, loop=True)
-    else:
-        st.warning(f"BGM 파일이 없습니다. `{BGM_PATH}` 경로에 mp3 파일을 넣어주세요.")
 
 st.divider()
 
