@@ -186,6 +186,7 @@ def read_gif(path):
     return None
 
 
+@st.cache_data
 def read_audio_base64(path):
     if os.path.exists(path):
         with open(path, "rb") as f:
@@ -306,7 +307,7 @@ with m4: st.metric("📈 보상 성장", "+169%", delta="EP 0 → EP 10000 평�
 # ── BGM 토글 ───────────────────────────────────────
 bgm_col, _ = st.columns([1, 5])
 with bgm_col:
-    bgm_on = st.toggle("🎵 BGM 재생", value=False)
+    bgm_on = st.toggle("🎵 BGM 재생", value=True)
 
 if bgm_on:
     bgm_b64 = read_audio_base64(BGM_PATH)
